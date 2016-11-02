@@ -30,8 +30,8 @@ public class ImageLoaderUtils {
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .placeholder(R.drawable.ic_image_loading)
-                .error(R.drawable.ic_empty_picture)
+                .placeholder(R.mipmap.ic_image_loading)
+                .error(R.mipmap.ic_empty_picture)
                 .crossFade().into(imageView);
     }
 
@@ -42,8 +42,8 @@ public class ImageLoaderUtils {
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .placeholder(R.drawable.ic_image_loading)
-                .error(R.drawable.ic_empty_picture)
+                .placeholder(R.mipmap.ic_image_loading)
+                .error(R.mipmap.ic_empty_picture)
                 .crossFade().into(imageView);
     }
     public static void displaySmallPhoto(Context context, ImageView imageView, String url) {
@@ -52,8 +52,8 @@ public class ImageLoaderUtils {
         }
         Glide.with(context).load(url).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.ic_image_loading)
-                .error(R.drawable.ic_empty_picture)
+                .placeholder(R.mipmap.ic_image_loading)
+                .error(R.mipmap.ic_empty_picture)
                 .thumbnail(0.5f)
                 .into(imageView);
     }
@@ -64,8 +64,8 @@ public class ImageLoaderUtils {
         Glide.with(context).load(url).asBitmap()
                 .format(DecodeFormat.PREFER_ARGB_8888)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.ic_image_loading)
-                .error(R.drawable.ic_empty_picture)
+                .placeholder(R.mipmap.ic_image_loading)
+                .error(R.mipmap.ic_empty_picture)
                 .into(imageView);
     }
     public static void display(Context context, ImageView imageView, int url) {
@@ -75,8 +75,8 @@ public class ImageLoaderUtils {
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .placeholder(R.drawable.ic_image_loading)
-                .error(R.drawable.ic_empty_picture)
+                .placeholder(R.mipmap.ic_image_loading)
+                .error(R.mipmap.ic_empty_picture)
                 .crossFade().into(imageView);
     }
     public static void displayRound(Context context,ImageView imageView, String url) {
@@ -85,7 +85,7 @@ public class ImageLoaderUtils {
         }
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.drawable.toux2)
+                .error(R.mipmap.toux2)
                 .centerCrop().transform(new GlideRoundTransformUtil(context)).into(imageView);
     }
 

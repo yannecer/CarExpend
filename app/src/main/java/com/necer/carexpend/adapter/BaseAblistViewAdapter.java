@@ -43,6 +43,7 @@ public class BaseAblistViewAdapter<T> extends android.widget.BaseAdapter {
     }
 
     public List<T> getData(){
+
         return data;
     }
 

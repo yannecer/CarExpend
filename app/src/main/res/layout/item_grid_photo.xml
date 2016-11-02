@@ -26,5 +26,5 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/rr_gad"
         android:layout_alignTop="@+id/rr_gad"
-        android:background="@drawable/cha" />
+        android:background="@mipmap/cha" />
 </RelativeLayout>

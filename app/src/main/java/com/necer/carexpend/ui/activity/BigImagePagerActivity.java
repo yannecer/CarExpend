@@ -24,7 +24,6 @@ import com.bumptech.glide.request.target.Target;
 import com.necer.carexpend.R;
 import com.necer.carexpend.base.BaseActivity;
 import com.necer.carexpend.view.ViewPagerFixed;
-import com.yuyh.library.imgsel.utils.StatusBarCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +74,6 @@ public class BigImagePagerActivity extends BaseActivity {
 
     @Override
     protected void setData(Bundle savedInstanceState) {
-        //设置透明状态栏
-       // SetTranslanteBar();
 
         ViewPager viewPager = (ViewPagerFixed) findViewById(R.id.pager);
         guideGroup = (LinearLayout) findViewById(R.id.guideGroup);
@@ -181,7 +178,7 @@ public class BigImagePagerActivity extends BaseActivity {
                 loading.setVisibility(View.VISIBLE);
                 Glide.with(context).load(imgurl)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .error(R.drawable.ic_empty_picture)
+                        .error(R.mipmap.ic_empty_picture)
                         .thumbnail(0.1f)
                         .listener(new RequestListener<String, GlideDrawable>() {
                             @Override

@@ -45,7 +45,7 @@ public class NinePicturesAdapter extends BaseAblistViewAdapter<String> {
         final String url = getData().get(position);
         //显示图片
         if (TextUtils.isEmpty(url) && showAdd) {
-            ImageLoaderUtils.display(mContext, imageView, R.drawable.addphoto);
+            ImageLoaderUtils.display(mContext, imageView, R.mipmap.addphoto);
             imgDelete.setVisibility(View.GONE);
         } else {
             imgDelete.setVisibility(View.VISIBLE);
@@ -156,5 +156,6 @@ public class NinePicturesAdapter extends BaseAblistViewAdapter<String> {
     public interface OnClickAddListener {
         void onClickAdd(int positin);
     }
+
 
 }

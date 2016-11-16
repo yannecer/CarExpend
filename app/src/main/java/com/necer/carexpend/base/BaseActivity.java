@@ -1,5 +1,6 @@
 package com.necer.carexpend.base;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,6 +22,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected Context mContext;
 
+    protected ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         ButterKnife.bind(this);
         setData(savedInstanceState);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("请稍后");
+        progressDialog.setCanceledOnTouchOutside(false);
+
     }
 
     protected abstract int getLayoutId();

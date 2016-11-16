@@ -1,5 +1,6 @@
 package com.necer.carexpend.ui.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -8,7 +9,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.necer.carexpend.MyLog;
 import com.necer.carexpend.R;
 import com.necer.carexpend.base.BaseActivity;
 import com.necer.carexpend.ui.fragment.HomeFragment;
@@ -16,7 +21,7 @@ import com.necer.carexpend.ui.fragment.HomeFragment;
 import butterknife.Bind;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Bind(R.id.nav_view)
@@ -27,6 +32,9 @@ public class MainActivity extends BaseActivity {
     DrawerLayout mDrawerLayout;
 
     private HomeFragment homeFragment;
+
+    private ImageView headImageView;
+    private TextView headTextView;
 
     @Override
     protected int getLayoutId() {
@@ -41,6 +49,13 @@ public class MainActivity extends BaseActivity {
         initNavigationView();
         homeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fl_main, homeFragment).commit();
+
+
+        View headerView = mNavView.getHeaderView(0);//得到侧滑菜单的头部view
+        headImageView = (ImageView) headerView.findViewById(R.id.nav_head_icon);
+        headTextView = (TextView) headerView.findViewById(R.id.nav_head_name);
+
+        headImageView.setOnClickListener(this);
 
 
     }
@@ -70,6 +85,12 @@ public class MainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
 
+                    case R.id.nav_item1:
+
+                        MyLog.d("nav_item1");
+                        break;
+
+
                 }
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 return true;
@@ -85,4 +106,17 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.nav_head_icon:
+
+                startActivity(new Intent(this, RegisterActivity.class));
+
+                break;
+        }
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
 }

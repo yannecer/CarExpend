@@ -24,11 +24,12 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/et_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:hint="请输入金额"
-            android:padding="10dp"
+            android:padding="15dp"
             android:layout_centerVertical="true"
             android:inputType="numberDecimal"
             android:background="@null"/>
@@ -40,7 +41,7 @@
             android:background="@color/colorPrimary"/>
 
         <EditText
-            android:id="@+id/et_content"
+            android:id="@+id/et_describe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ntb"
@@ -58,7 +59,6 @@
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/view_gad"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

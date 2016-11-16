@@ -112,7 +112,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             case R.id.nav_head_icon:
 
-                startActivity(new Intent(this, RegisterActivity.class));
+               // startActivity(new Intent(this, RegisterActivity.class));
+               /* User currentUser = BmobUser.getCurrentUser(User.class);
+                if (currentUser == null) {
+
+                }*/
+                startActivity(new Intent(this, LoginActivity.class));
 
                 break;
         }

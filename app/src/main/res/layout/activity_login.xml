@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" 
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,10 +14,13 @@
         android:background="@color/colorPrimary"
         android:paddingTop="@dimen/padding_top"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:title="注册"
+        app:title="登录"
         />
-    
-    
+
+
+
+
+
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="wrap_content"
@@ -24,7 +28,7 @@
         android:src="@mipmap/ic_launcher"
         android:layout_marginTop="50dp"
         />
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,19 +57,12 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line"/>
-        <EditText
-            android:id="@+id/et_userName"
-            style="@style/edit_login"
-            android:hint="昵称"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/line"/>
+
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/bt_register"
+        android:id="@+id/bt_login"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/main"
@@ -73,17 +70,19 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginTop="20dp"
-        android:text="注册"/>
-
+        android:text="登录"/>
 
     <TextView
-        android:id="@+id/tv_goLogin"
+        android:id="@+id/tv_goRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="已有账号？去登录"
+        android:text="没有账号？去注册"
         android:layout_marginTop="10dp"
         android:textSize="13sp"
         />
+
+
+
 
 
 

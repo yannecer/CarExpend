@@ -1,18 +1,22 @@
 package com.necer.carexpend.ui.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
+import com.necer.carexpend.MyLog;
 import com.necer.carexpend.R;
 import com.necer.carexpend.adapter.HomeAdapter;
 import com.necer.carexpend.base.BaseFragment;
+import com.necer.carexpend.bean.Expend;
+import com.necer.carexpend.bean.User;
+import com.necer.carexpend.contract.HomeContract;
+import com.necer.carexpend.model.HomeFragmentModel;
 import com.necer.carexpend.ui.activity.AddExpendActivity;
-import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.necer.carexpend.utils.FABUtils;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
@@ -23,13 +27,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import cn.bmob.v3.BmobUser;
 
 
 /**
  * Created by necer on 2016/11/1.
  */
 
-public class HomeFragment extends BaseFragment implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class HomeFragment extends BaseFragment implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener, HomeContract.View {
 
     @Bind(R.id.label_list_sample_rfal)
     RapidFloatingActionLayout rfaLayout;
@@ -47,6 +52,11 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
     private LuRecyclerViewAdapter mLRecyclerViewAdapter;
 
     private RapidFloatingActionHelper rfabHelper;
+    private RapidFloatingActionContentLabelList rfaContent;
+
+    private HomeFragmentModel model;
+
+    private User user;
 
     @Override
     protected int getLayoutId() {
@@ -56,8 +66,17 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
     @Override
     protected void setDate(Bundle savedInstanceState) {
 
-        initFAB();
+
+
+        rfaContent = new RapidFloatingActionContentLabelList(mContext);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        rfabHelper=  FABUtils.buildFAB(mContext,rfaContent,rfaLayout,rfaButton);
+
         initRecyclerView();
+
+        user = BmobUser.getCurrentUser(User.class);
+        model = new HomeFragmentModel(user,this);
+        model.getDataList();
 
 
     }
@@ -76,65 +95,6 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
 
     }
 
-    private void initFAB() {
-        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(mContext);
-        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
-        List<RFACLabelItem> items = new ArrayList<>();
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("维修费用")
-                .setResId(R.mipmap.car_fix)
-                .setLabelColor(Color.parseColor("#16B180"))
-                .setWrapper(1)
-        );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("保险")
-                .setResId(R.mipmap.car_insurance)
-                .setLabelColor(Color.parseColor("#B1AF16"))
-                .setWrapper(2)
-        );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("保养")
-                .setResId(R.mipmap.car_maintenance)
-                .setLabelColor(Color.parseColor("#B1AF16"))
-                .setWrapper(3)
-        );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("停车费")
-                .setResId(R.mipmap.car_parking_fee)
-                .setLabelColor(Color.parseColor("#019B79"))
-                .setWrapper(3)
-        );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("过路费")
-                .setResId(R.mipmap.car_road_fee)
-                .setLabelColor(Color.parseColor("#019B79"))
-                .setWrapper(3)
-        );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("违章罚单")
-                .setResId(R.mipmap.car_violation)
-                .setLabelColor(Color.parseColor("#CE0505"))
-                .setWrapper(3)
-        );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("洗车")
-                .setResId(R.mipmap.car_washing)
-                .setLabelColor(Color.parseColor("#057BCE"))
-                .setWrapper(3)
-        );
-        rfaContent
-                .setItems(items)
-                .setIconShadowRadius(ABTextUtil.dip2px(mContext, 5))
-                .setIconShadowColor(0xff888888)
-                .setIconShadowDy(ABTextUtil.dip2px(mContext, 5))
-        ;
-
-        rfabHelper = new RapidFloatingActionHelper(
-                mContext,
-                rfaLayout,
-                rfaButton,
-                rfaContent).build();
-    }
 
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
@@ -153,4 +113,18 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
         rfabHelper.collapseContent();
     }
 
+    @Override
+    public void setDataList(List<Expend> dataList) {
+        MyLog.d("dataList:::"+dataList.get(0).getMoney());
+    }
+
+    @Override
+    public void start() {
+        swipe.setRefreshing(true);
+    }
+
+    @Override
+    public void end() {
+        swipe.setRefreshing(false);
+    }
 }

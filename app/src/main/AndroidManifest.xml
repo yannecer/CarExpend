@@ -41,6 +41,7 @@
         <activity android:name=".ui.activity.AddExpendActivity" />
         <activity android:name=".ui.activity.BigImagePagerActivity" />
         <activity android:name=".ui.activity.RegisterActivity"/>
+        <activity android:name=".ui.activity.LoginActivity"/>
     </application>
 
 </manifest>

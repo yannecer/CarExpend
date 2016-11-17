@@ -19,17 +19,15 @@ public class AddExpandModel {
     public void submitExpand(User user, String money, String date, String describe, List<String> imageList) {
 
         if (imageList.size() == 0) {
-            submitWithoutPic(user, money, date, describe);
+            submit(user, money, date, describe, null);
         } else {
-            submitPic(user, money, date, describe,imageList);
+            submit(user, money, date, describe,imageList);
         }
 
     }
 
 
-
-
-    private void submitPic(final User user, final String money, final String date, final String describe, final List<String> imageList) {
+    private void submit(final User user, final String money, final String date, final String describe, final List<String> imageList) {
 
         String[] paths = new String[imageList.size()];
         for (int i = 0; i < imageList.size(); i++) {
@@ -69,28 +67,11 @@ public class AddExpandModel {
         expend.setDescribe(describe);
         expend.setMoney(Double.parseDouble(money));
         expend.setDate(date);
-        expend.setImageUrl(imageList);
-
-        expend.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-
-            }
-        });
+        if (imageList != null) {
+            expend.setImageUrl(imageList);
+        }
 
 
-
-
-    }
-
-
-    private void submitWithoutPic(User user, String money, String date, String describe) {
-
-        Expend expend = new Expend();
-        expend.setUser(user);
-        expend.setDescribe(describe);
-        expend.setMoney(Double.parseDouble(money));
-        expend.setDate(date);
         expend.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
@@ -100,6 +81,5 @@ public class AddExpandModel {
         });
 
     }
-
 
 }

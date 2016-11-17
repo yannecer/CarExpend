@@ -1,6 +1,5 @@
 package com.necer.carexpend.base;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -18,11 +17,11 @@ import butterknife.ButterKnife;
  * Created by necer on 2016/11/2.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivity {
 
     protected Context mContext;
 
-    protected ProgressDialog progressDialog;
+   // protected ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,9 +34,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setData(savedInstanceState);
 
-        progressDialog = new ProgressDialog(this);
+        /*progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("请稍后");
-        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCanceledOnTouchOutside(false);*/
 
     }
 

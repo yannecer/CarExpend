@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.necer.carexpend.R;
 import com.necer.carexpend.base.BaseActivity;
 import com.necer.carexpend.bean.User;
+import com.necer.carexpend.utils.WatingDialog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -24,13 +25,10 @@ public class LoginActivity extends BaseActivity{
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-
     @Bind(R.id.et_mobileNumber)
     EditText et_mobileNumber;
     @Bind(R.id.et_passWord)
     EditText et_passWord;
-
-
 
     @Override
     protected int getLayoutId() {
@@ -41,8 +39,6 @@ public class LoginActivity extends BaseActivity{
     protected void setData(Bundle savedInstanceState) {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
 
 
@@ -54,10 +50,9 @@ public class LoginActivity extends BaseActivity{
                 String mobileNumber = et_mobileNumber.getText().toString();
                 String passWord = et_passWord.getText().toString();
 
-
                 login(mobileNumber,passWord);
 
-
+                WatingDialog.show(this);
 
 
                 break;
@@ -65,16 +60,6 @@ public class LoginActivity extends BaseActivity{
 }
 
     private void login(String mobileNumber, String passWord) {
-
-       /* User user = new User();
-        user.setMobilePhoneNumber(mobileNumber);
-        user.setPassword(passWord);
-        user.login(new SaveListener<User>() {
-            @Override
-            public void done(User user, BmobException e) {
-
-            }
-        });*/
 
         BmobUser.loginByAccount(mobileNumber, passWord, new LogInListener<User>() {
             @Override

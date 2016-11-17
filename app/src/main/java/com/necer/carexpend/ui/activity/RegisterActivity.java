@@ -90,7 +90,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void register(String mobileNumber, String password, String userName) {
-        progressDialog.show();
+        //progressDialog.show();
 
         User user = new User();
         user.setUsername(userName);
@@ -99,7 +99,7 @@ public class RegisterActivity extends BaseActivity {
         user.signUp(new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
-                progressDialog.dismiss();
+              //  progressDialog.dismiss();
                 if (e == null) {
                     Snackbar.make(et_mobileNumber, "注册成功！", Snackbar.LENGTH_SHORT).show();
                     RegisterActivity.this.finish();

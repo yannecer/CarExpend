@@ -1,5 +1,7 @@
 package com.necer.carexpend.contract;
 
+import com.necer.carexpend.base.BaseModel;
+import com.necer.carexpend.base.BaseView;
 import com.necer.carexpend.bean.Expend;
 
 import java.util.List;
@@ -10,20 +12,11 @@ import java.util.List;
 
 public interface HomeContract {
 
-    interface View  {
+    interface View  extends BaseView{
         void setDataList(List<Expend> dataList);
-        /**
-         * 开始请求
-         */
-        void start();
-
-        /**
-         * 结束请求
-         */
-        void end();
     }
 
-    interface Model{
+    interface Model extends BaseModel{
         void getDataList();
     }
 

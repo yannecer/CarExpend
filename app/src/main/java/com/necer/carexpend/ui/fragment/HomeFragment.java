@@ -66,8 +66,6 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
     @Override
     protected void setDate(Bundle savedInstanceState) {
 
-
-
         rfaContent = new RapidFloatingActionContentLabelList(mContext);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         rfabHelper=  FABUtils.buildFAB(mContext,rfaContent,rfaLayout,rfaButton);
@@ -119,12 +117,13 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
     }
 
     @Override
-    public void start() {
+    public void startLoading() {
         swipe.setRefreshing(true);
     }
 
     @Override
-    public void end() {
+    public void endLoading() {
         swipe.setRefreshing(false);
     }
+
 }

@@ -29,7 +29,7 @@ public class HomeFragmentModel implements HomeContract.Model{
 
     @Override
     public void getDataList() {
-        mView.start();
+        mView.startLoading();
         BmobQuery<Expend> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("user", user);
         bmobQuery.findObjects(new FindListener<Expend>() {
@@ -40,7 +40,7 @@ public class HomeFragmentModel implements HomeContract.Model{
                     MyLog.d("sdfadfasdfsadf");
                     mView.setDataList(list);
                 }
-                mView.end();
+                mView.endLoading();
             }
         });
     }

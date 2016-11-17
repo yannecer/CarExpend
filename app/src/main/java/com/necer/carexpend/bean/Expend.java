@@ -15,6 +15,16 @@ public class Expend extends BmobObject {
     private double money;
     private String describe;
     private String date;
+    private int type;
+
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getDate() {
         return date;

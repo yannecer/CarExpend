@@ -40,4 +40,6 @@ dependencies {
 
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
 
+    compile 'top.zibin:Luban:1.0.9'
+
 }

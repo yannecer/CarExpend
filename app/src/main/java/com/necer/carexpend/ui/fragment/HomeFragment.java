@@ -1,5 +1,6 @@
 package com.necer.carexpend.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -7,9 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
-import com.necer.carexpend.MyLog;
 import com.necer.carexpend.R;
 import com.necer.carexpend.adapter.HomeAdapter;
+import com.necer.carexpend.application.Constant;
 import com.necer.carexpend.base.BaseFragment;
 import com.necer.carexpend.bean.Expend;
 import com.necer.carexpend.bean.User;
@@ -23,7 +24,6 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -46,7 +46,7 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
     LuRecyclerView recyclerView;
 
 
-    private List<String> dataList;
+    private List<Expend> dataList;
     private HomeAdapter homeAdapter;
 
     private LuRecyclerViewAdapter mLRecyclerViewAdapter;
@@ -80,10 +80,40 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
     }
 
     private void initRecyclerView() {
-        dataList = new ArrayList<>();
+       /* dataList = new ArrayList<>();
         for (int i = 0; i <50 ; i++) {
             dataList.add("ssss");
-        }
+        }*/
+
+
+    }
+
+
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        goAddExpendActivity(position,item);
+    }
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        goAddExpendActivity(position,item);
+    }
+    private void  goAddExpendActivity(int position,RFACLabelItem item) {
+        String label = item.getLabel();
+        Intent intent = new Intent(mContext, AddExpendActivity.class);
+        intent.putExtra("label", label);
+        intent.putExtra("type", position);
+        startActivityForResult(intent, Constant.Refresh);
+        rfabHelper.collapseContent();
+    }
+
+    @Override
+    public void setDataList(List<Expend> dataList) {
+       /* for (int i = 0; i < dataList.size(); i++) {
+            MyLog.d("dataList:::"+dataList.get(i).getMoney());
+        }*/
+
+
         homeAdapter = new HomeAdapter(mContext,dataList, R.layout.item_home);
 
         mLRecyclerViewAdapter = new LuRecyclerViewAdapter(homeAdapter);
@@ -91,29 +121,6 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
 
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
-    }
-
-
-    @Override
-    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        goAddExpendActivity(position);
-    }
-
-    @Override
-    public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        goAddExpendActivity(position);
-    }
-
-
-    private void  goAddExpendActivity(int position) {
-        Intent intent = new Intent(mContext, AddExpendActivity.class);
-        startActivity(intent);
-        rfabHelper.collapseContent();
-    }
-
-    @Override
-    public void setDataList(List<Expend> dataList) {
-        MyLog.d("dataList:::"+dataList.get(0).getMoney());
     }
 
     @Override
@@ -126,4 +133,23 @@ public class HomeFragment extends BaseFragment implements RapidFloatingActionCon
         swipe.setRefreshing(false);
     }
 
+    @Override
+    public void onError(String errorMessage) {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case Constant.Refresh:
+                    model.getDataList();
+                    break;
+
+            }
+        }
+
+    }
 }

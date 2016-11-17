@@ -1,6 +1,5 @@
 package com.necer.carexpend.model;
 
-import com.necer.carexpend.MyLog;
 import com.necer.carexpend.bean.Expend;
 import com.necer.carexpend.bean.User;
 import com.necer.carexpend.contract.HomeContract;
@@ -37,7 +36,6 @@ public class HomeFragmentModel implements HomeContract.Model{
             public void done(List<Expend> list, BmobException e) {
 
                 if (e == null) {
-                    MyLog.d("sdfadfasdfsadf");
                     mView.setDataList(list);
                 }
                 mView.endLoading();

@@ -1,5 +1,6 @@
 package com.necer.carexpend.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import com.necer.carexpend.R;
 import com.necer.carexpend.adapter.NinePicturesAdapter;
 import com.necer.carexpend.base.BaseActivity;
 import com.necer.carexpend.bean.User;
+import com.necer.carexpend.contract.AddExpendContract;
 import com.necer.carexpend.model.AddExpandModel;
 import com.necer.carexpend.utils.CommUtils;
 import com.necer.carexpend.utils.ImageLoaderUtils;
@@ -34,7 +36,7 @@ import cn.bmob.v3.BmobUser;
  * Created by necer on 2016/11/2.
  */
 
-public class AddExpendActivity extends BaseActivity {
+public class AddExpendActivity extends BaseActivity implements AddExpendContract.View {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.gridview)
@@ -50,6 +52,10 @@ public class AddExpendActivity extends BaseActivity {
     private NinePicturesAdapter ninePicturesAdapter;
 
     private AddExpandModel model;
+    private User user;
+
+    private int type;
+    private String label;
 
 
     @Override
@@ -59,10 +65,16 @@ public class AddExpendActivity extends BaseActivity {
 
     @Override
     protected void setData(Bundle savedInstanceState) {
+
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        model = new AddExpandModel();
+        user = BmobUser.getCurrentUser(User.class);
+        model = new AddExpandModel(this,user,this);
+
+        type = getIntent().getIntExtra("type", -1);
+        label = getIntent().getStringExtra("label");
 
         ninePicturesAdapter = new NinePicturesAdapter(this, 9, new NinePicturesAdapter.OnClickAddListener() {
             @Override
@@ -91,15 +103,6 @@ public class AddExpendActivity extends BaseActivity {
 
         }
 
-        /*else {
-
-
-
-           *//* ;
-            for (int i = 0; i < data.size(); i++) {
-                MyLog.d("data::"+data.get(i));
-            }*//*
-        }*/
 
 
         return true;
@@ -107,18 +110,15 @@ public class AddExpendActivity extends BaseActivity {
 
     private void submit() {
 
-        //progressDialog.show();
-
         String money = et_money.getText().toString();
         String describe = et_describe.getText().toString();
         String date = menu.getItem(0).getTitle().toString();
-
-
-
         List<String> imageList = ninePicturesAdapter.getData();
-        User user = BmobUser.getCurrentUser(User.class);
 
-
+        if (money.equals("")) {
+            Snackbar.make(et_money,"请输入money！",Snackbar.LENGTH_SHORT).show();
+            return;
+        }
 
         for (int i = 0; i < imageList.size(); i++) {
             if (imageList.get(i).equals("")) {
@@ -126,21 +126,13 @@ public class AddExpendActivity extends BaseActivity {
             }
         }
 
-
-        if (money.equals("")) {
-            Snackbar.make(et_money,"请输入money！",Snackbar.LENGTH_SHORT).show();
-            return;
-        }
-        MyLog.d("user::"+user);
-
-        model.submitExpand(user, money, date, describe, imageList);
+        model.submitExpend(money,date,describe,type,imageList);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_submit, menu);
-
         menu.getItem(0).setTitle(CommUtils.getNowDate());
         return true;
     }
@@ -182,11 +174,35 @@ public class AddExpendActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             List<String> pathList = data.getStringArrayListExtra(ImgSelActivity.INTENT_RESULT);
-
             if (ninePicturesAdapter != null) {
                 ninePicturesAdapter.addAll(pathList);
             }
         }
     }
 
+    @Override
+    public void onAddSucceed() {
+        setResult(Activity.RESULT_OK, null);
+        finish();
+    }
+
+    @Override
+    public void startLoading() {
+      //  WatingDialog.show(this);
+
+        progressDialog.show();
+
+
+    }
+
+    @Override
+    public void endLoading() {
+       // WatingDialog.dismiss(this);
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+        Snackbar.make(et_describe, errorMessage, Snackbar.LENGTH_SHORT).show();
+    }
 }

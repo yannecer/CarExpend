@@ -1,5 +1,6 @@
 package com.necer.carexpend.utils;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 
@@ -21,13 +22,18 @@ public class WatingDialog {
         return progressDialog;
     }
 
-    public static void show(Context context) {
-        getInstance(context).show();
+    public static void show(Activity activity) {
+
+        if (!activity.isFinishing()) {
+            getInstance(activity).show();
+
+        }
+
     }
 
-    public static void show(Context context, String message) {
-        getInstance(context).setMessage(message);
-        show(context);
+    public static void show(Activity activity, String message) {
+        getInstance(activity).setMessage(message);
+        show(activity);
     }
 
     public static void dismiss(Context context) {

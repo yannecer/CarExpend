@@ -58,10 +58,7 @@ public class RegisterActivity extends BaseActivity {
     @OnClick(value = {R.id.iv_icon, R.id.bt_register})
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.bt_register:
-
-
                 String mobileNumber = et_mobileNumber.getText().toString();
                 String password = et_passWord.getText().toString();
                 String userName = et_userName.getText().toString();

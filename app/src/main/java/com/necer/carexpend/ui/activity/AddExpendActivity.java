@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -87,6 +89,7 @@ public class AddExpendActivity extends BaseActivity implements AddExpendContract
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -97,14 +100,21 @@ public class AddExpendActivity extends BaseActivity implements AddExpendContract
             MyLog.d("时间");
 
 
+          /*  DatePickerDialog datePickerDialog = new DatePickerDialog(this);
+            datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                    MyLog.d("时间::" + i + "-" + i1 + "-" + i2);
+                }
+            });
+            datePickerDialog.show();*/
+
+
         }
         if (item.getItemId() == R.id.menu_submit) {
             submit();
 
         }
-
-
-
         return true;
     }
 

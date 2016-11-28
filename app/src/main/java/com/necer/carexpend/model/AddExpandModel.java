@@ -78,6 +78,10 @@ public class AddExpandModel implements AddExpendContract.Model{
                 BmobFile.uploadBatch(paths, new UploadBatchListener() {
                     @Override
                     public void onSuccess(List<BmobFile> list, List<String> list1) {
+
+
+
+
                         if (list1.size() == imageList.size()) {
                             submit( user,  money, date,  describe, type,  list1);
                         }

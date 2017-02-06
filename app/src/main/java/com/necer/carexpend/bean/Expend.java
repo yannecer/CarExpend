@@ -16,6 +16,8 @@ public class Expend extends BmobObject {
     private String describe;
     private String date;
     private int type;
+    private List<String> imageUrl;
+
 
 
     public int getType() {
@@ -34,7 +36,7 @@ public class Expend extends BmobObject {
         this.date = time;
     }
 
-    private List<String> imageUrl;
+
 
 
     public User getUser() {

@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/library/FABlibrary/FABlibrary.iml" filepath="$PROJECT_DIR$/library/FABlibrary/FABlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/npicker/npicker.iml" filepath="$PROJECT_DIR$/library/npicker/npicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/photoPicker/photoPicker.iml" filepath="$PROJECT_DIR$/library/photoPicker/photoPicker.iml" />
     </modules>
   </component>

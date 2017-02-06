@@ -3,7 +3,6 @@ package com.necer.carexpend.utils;
 import android.content.Context;
 import android.graphics.Color;
 
-import com.necer.carexpend.R;
 import com.necer.carexpend.application.Constant;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
@@ -26,46 +25,46 @@ public class FABUtils {
 
         List<RFACLabelItem> items = new ArrayList<>();
         items.add(new RFACLabelItem<Integer>()
-                .setLabel(Constant.expendItems[0])
-                .setResId(R.mipmap.car_fix)
-                .setLabelColor(Color.parseColor("#16B180"))
+                        .setLabel(Constant.EXPENDITEMS[0])
+                        .setResId(Constant.EXPENDICON[0])
+                        .setLabelColor(Color.parseColor("#16B180"))
                 //.setWrapper(1)
         );
         items.add(new RFACLabelItem<Integer>()
-                .setLabel(Constant.expendItems[1])
-                .setResId(R.mipmap.car_insurance)
-                .setLabelColor(Color.parseColor("#B1AF16"))
+                        .setLabel(Constant.EXPENDITEMS[1])
+                        .setResId(Constant.EXPENDICON[1])
+                        .setLabelColor(Color.parseColor("#B1AF16"))
                 //.setWrapper(2)
         );
         items.add(new RFACLabelItem<Integer>()
-                .setLabel(Constant.expendItems[2])
-                .setResId(R.mipmap.car_maintenance)
-                .setLabelColor(Color.parseColor("#B1AF16"))
+                        .setLabel(Constant.EXPENDITEMS[2])
+                        .setResId(Constant.EXPENDICON[2])
+                        .setLabelColor(Color.parseColor("#B1AF16"))
                 //.setWrapper(3)
         );
         items.add(new RFACLabelItem<Integer>()
-                .setLabel(Constant.expendItems[3])
-                .setResId(R.mipmap.car_parking_fee)
-                .setLabelColor(Color.parseColor("#019B79"))
+                        .setLabel(Constant.EXPENDITEMS[3])
+                        .setResId(Constant.EXPENDICON[3])
+                        .setLabelColor(Color.parseColor("#019B79"))
                 //.setWrapper(3)
         );
         items.add(new RFACLabelItem<Integer>()
-                .setLabel(Constant.expendItems[4])
-                .setResId(R.mipmap.car_road_fee)
-                .setLabelColor(Color.parseColor("#019B79"))
+                        .setLabel(Constant.EXPENDITEMS[4])
+                        .setResId(Constant.EXPENDICON[4])
+                        .setLabelColor(Color.parseColor("#019B79"))
                 //.setWrapper(3)
         );
         items.add(new RFACLabelItem<Integer>()
-                .setLabel(Constant.expendItems[5])
-                .setResId(R.mipmap.car_violation)
-                .setLabelColor(Color.parseColor("#CE0505"))
-               // .setWrapper(3)
+                        .setLabel(Constant.EXPENDITEMS[5])
+                        .setResId(Constant.EXPENDICON[5])
+                        .setLabelColor(Color.parseColor("#CE0505"))
+                // .setWrapper(3)
         );
         items.add(new RFACLabelItem<Integer>()
-                .setLabel(Constant.expendItems[6])
-                .setResId(R.mipmap.car_washing)
-                .setLabelColor(Color.parseColor("#057BCE"))
-               // .setWrapper(3)
+                        .setLabel(Constant.EXPENDITEMS[6])
+                        .setResId(Constant.EXPENDICON[6])
+                        .setLabelColor(Color.parseColor("#057BCE"))
+                // .setWrapper(3)
         );
         rfaContent
                 .setItems(items)

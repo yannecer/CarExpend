@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -15,15 +13,16 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.necer.carexpend.MyLog;
 import com.necer.carexpend.R;
 import com.necer.carexpend.adapter.NinePicturesAdapter;
+import com.necer.carexpend.application.Constant;
 import com.necer.carexpend.base.BaseActivity;
+import com.necer.carexpend.bean.Expend;
 import com.necer.carexpend.bean.User;
-import com.necer.carexpend.contract.AddExpendContract;
-import com.necer.carexpend.model.AddExpandModel;
+import com.necer.carexpend.service.UpService;
 import com.necer.carexpend.utils.CommUtils;
 import com.necer.carexpend.utils.ImageLoaderUtils;
+import com.necer.carexpend.utils.SharePrefUtil;
 import com.necer.carexpend.view.NoScrollGridView;
 import com.yuyh.library.imgsel.ImageLoader;
 import com.yuyh.library.imgsel.ImgSelActivity;
@@ -33,12 +32,13 @@ import java.util.List;
 
 import butterknife.Bind;
 import cn.bmob.v3.BmobUser;
+import necer.npicker.DatePicker;
 
 /**
  * Created by necer on 2016/11/2.
  */
 
-public class AddExpendActivity extends BaseActivity implements AddExpendContract.View {
+public class AddExpendActivity extends BaseActivity{
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.gridview)
@@ -48,16 +48,16 @@ public class AddExpendActivity extends BaseActivity implements AddExpendContract
     @Bind(R.id.et_describe)
     EditText et_describe;
 
-
     private Menu menu;
 
     private NinePicturesAdapter ninePicturesAdapter;
 
-    private AddExpandModel model;
     private User user;
 
     private int type;
     private String label;
+
+
 
 
     @Override
@@ -73,7 +73,6 @@ public class AddExpendActivity extends BaseActivity implements AddExpendContract
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         user = BmobUser.getCurrentUser(User.class);
-        model = new AddExpandModel(this,user,this);
 
         type = getIntent().getIntExtra("type", -1);
         label = getIntent().getStringExtra("label");
@@ -89,42 +88,35 @@ public class AddExpendActivity extends BaseActivity implements AddExpendContract
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.menu_time:
+                final MenuItem item1 = menu.getItem(0);
+                new DatePicker(this)
+                        .setSelect(item1.getTitle().toString())
+                        .setOnDatePickListener(new DatePicker.OnDatePickListener() {
+                            @Override
+                            public void onSelect(String year, String month, String day) {
+                                item1.setTitle(year + "-" + month + "-" + day);
+                            }
+                        }).show();
+                break;
+            case R.id.menu_submit:
+
+                submit();
+
+                break;
         }
 
-        if (item.getItemId() == R.id.menu_time) {
-            MyLog.d("时间");
-
-
-
-
-
-
-
-          /*  DatePickerDialog datePickerDialog = new DatePickerDialog(this);
-            datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                    MyLog.d("时间::" + i + "-" + i1 + "-" + i2);
-                }
-            });
-            datePickerDialog.show();*/
-
-
-        }
-        if (item.getItemId() == R.id.menu_submit) {
-            submit();
-
-        }
         return true;
     }
 
     private void submit() {
-
         String money = et_money.getText().toString();
         String describe = et_describe.getText().toString();
         String date = menu.getItem(0).getTitle().toString();
@@ -134,14 +126,35 @@ public class AddExpendActivity extends BaseActivity implements AddExpendContract
             Snackbar.make(et_money,"请输入money！",Snackbar.LENGTH_SHORT).show();
             return;
         }
-
         for (int i = 0; i < imageList.size(); i++) {
             if (imageList.get(i).equals("")) {
                 imageList.remove(i);
             }
         }
 
-        model.submitExpend(money,date,describe,type,imageList);
+        Expend expend = new Expend();
+        expend.setUser(user);
+        expend.setMoney(Double.parseDouble(money));
+        expend.setType(type);
+        expend.setDescribe(describe);
+        expend.setDate(date);
+        expend.setImageUrl(imageList);
+
+        //保存正在上传的
+        SharePrefUtil.saveObj(this, Constant.WAITFORUPLOAD,expend);
+
+        Intent intent = new Intent(this, UpService.class);
+        intent.putExtra(UpService.EXPEND, expend);
+        startService(intent);
+
+
+        //返回前页面信息
+
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(Constant.WAITFORUPLOAD, expend);
+        setResult(Activity.RESULT_OK,resultIntent);
+        finish();
+
     }
 
     @Override
@@ -195,29 +208,4 @@ public class AddExpendActivity extends BaseActivity implements AddExpendContract
         }
     }
 
-    @Override
-    public void onAddSucceed() {
-        setResult(Activity.RESULT_OK, null);
-        finish();
-    }
-
-    @Override
-    public void startLoading() {
-      //  WatingDialog.show(this);
-
-        progressDialog.show();
-
-
-    }
-
-    @Override
-    public void endLoading() {
-       // WatingDialog.dismiss(this);
-        progressDialog.dismiss();
-    }
-
-    @Override
-    public void onError(String errorMessage) {
-        Snackbar.make(et_describe, errorMessage, Snackbar.LENGTH_SHORT).show();
-    }
 }

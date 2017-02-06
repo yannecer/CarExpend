@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.github.jdsjlzx.recyclerview.LuRecyclerView
-                android:id="@+id/recyclerView"
+            <com.necer.carexpend.view.NListView
+                android:id="@+id/nlistview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />

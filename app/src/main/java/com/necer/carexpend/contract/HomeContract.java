@@ -13,11 +13,13 @@ import java.util.List;
 public interface HomeContract {
 
     interface View  extends BaseView{
-        void setDataList(List<Expend> dataList);
+        void setFirstList(List<Expend> dataList);
+
+        void setMoreList(List<Expend> dataList);
     }
 
     interface Model extends BaseModel{
-        void getDataList();
+        void getDataList(int page,boolean isShowLoading,int dataSize);
     }
 
 

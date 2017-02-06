@@ -1,5 +1,6 @@
 package com.necer.carexpend.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import com.necer.carexpend.R;
 import com.necer.carexpend.base.BaseActivity;
 import com.necer.carexpend.bean.User;
+import com.necer.carexpend.utils.CommUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -48,15 +50,17 @@ public class RegisterActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            //finish();
+            CommUtils.doubleCloseActivity(this);
         }
         return true;
 
 
     }
 
-    @OnClick(value = {R.id.iv_icon, R.id.bt_register})
+    @OnClick(value = {R.id.iv_icon, R.id.bt_register, R.id.tv_goLogin})
     public void onClick(View view) {
+
         switch (view.getId()) {
             case R.id.bt_register:
                 String mobileNumber = et_mobileNumber.getText().toString();
@@ -82,13 +86,17 @@ public class RegisterActivity extends BaseActivity {
                 register(mobileNumber, password, userName);
 
                 break;
+            case R.id.tv_goLogin:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
         }
 
     }
 
     private void register(String mobileNumber, String password, String userName) {
-        //progressDialog.show();
-
+        progressDialog.show();
         User user = new User();
         user.setUsername(userName);
         user.setMobilePhoneNumber(mobileNumber);
@@ -96,18 +104,21 @@ public class RegisterActivity extends BaseActivity {
         user.signUp(new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
-              //  progressDialog.dismiss();
+                progressDialog.dismiss();
                 if (e == null) {
                     Snackbar.make(et_mobileNumber, "注册成功！", Snackbar.LENGTH_SHORT).show();
                     RegisterActivity.this.finish();
                 } else {
                     Snackbar.make(et_mobileNumber, e.getMessage(), Snackbar.LENGTH_SHORT).show();
                 }
-
             }
         });
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        CommUtils.doubleCloseActivity(this);
+    }
 }

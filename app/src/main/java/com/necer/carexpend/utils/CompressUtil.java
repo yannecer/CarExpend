@@ -29,7 +29,7 @@ public class CompressUtil {
         compressList = new ArrayList<>();
     }
 
-    public void compress() {
+    public CompressUtil compress() {
 
         String path = pathList.get(index);
         MyLog.d("path::"+path);
@@ -41,10 +41,10 @@ public class CompressUtil {
 
                     @Override
                     public void onStart() {
+
                     }
                     @Override
                     public void onSuccess(File file) {
-
                         compressList.add(file.getAbsolutePath());
                         index++;
                         if (index == pathList.size()) {
@@ -62,6 +62,7 @@ public class CompressUtil {
                     }
                 }).launch();    //启动压缩
 
+        return this;
 
     }
 
@@ -69,7 +70,6 @@ public class CompressUtil {
 
 
     public interface OnCompressCompleteListener {
-
         void OnCompressComplete(List<String> pathList);
 
     }

@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,15 +50,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <!--<com.necer.carexpend.view.ExpandableTextView
-                android:id="@+id/tv_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:contentTextSize="14sp"
-                app:maxCollapsedLines="5"
-                app:showExpandCollapseDrawable="false"
-                app:textCollapse="@string/shink"
-                app:textExpand="@string/expand" />-->
 
             <com.lzy.ninegrid.NineGridView
                 android:id="@+id/nineGrid"
@@ -81,7 +72,7 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:id="@+id/delete"
+                    android:id="@+id/tv_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -95,10 +86,10 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View
+   <!-- <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#c2c2c2" />
+        android:background="#c2c2c2" />-->
 
 
 </LinearLayout>

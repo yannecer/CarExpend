@@ -27,19 +27,30 @@ public class HomeFragmentModel implements HomeContract.Model{
     }
 
     @Override
-    public void getDataList() {
-        mView.startLoading();
+    public void getDataList(final int page,boolean isShowLoading,int dataSize) {
+        if (isShowLoading) {
+            mView.startLoading();
+        }
         BmobQuery<Expend> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("user", user);
+        bmobQuery.order("-createdAt");
+        bmobQuery.setLimit(10);
+        bmobQuery.setSkip(dataSize);
         bmobQuery.findObjects(new FindListener<Expend>() {
             @Override
             public void done(List<Expend> list, BmobException e) {
-
                 if (e == null) {
-                    mView.setDataList(list);
+                    if (page == 0) {
+                        mView.setFirstList(list);
+                    } else {
+                        mView.setMoreList(list);
+                    }
                 }
                 mView.endLoading();
             }
         });
+
     }
+
+
 }

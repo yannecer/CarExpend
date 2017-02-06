@@ -10,6 +10,4 @@ public interface BaseView {
 
     void endLoading();
 
-    void onError(String errorMessage);
-
 }

@@ -17,6 +17,7 @@ import com.necer.carexpend.MyLog;
 import com.necer.carexpend.R;
 import com.necer.carexpend.base.BaseActivity;
 import com.necer.carexpend.ui.fragment.HomeFragment;
+import com.necer.carexpend.utils.CommUtils;
 
 import butterknife.Bind;
 
@@ -66,7 +67,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            CommUtils.doubleCloseActivity(this);
         }
     }
 
@@ -89,8 +91,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                         MyLog.d("nav_item1");
                         break;
-
-
                 }
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 return true;
@@ -124,4 +124,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
+
 }

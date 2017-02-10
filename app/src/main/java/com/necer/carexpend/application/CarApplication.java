@@ -16,8 +16,13 @@ import cn.bmob.v3.Bmob;
 
 public class CarApplication extends Application {
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-
+        NineGridView.setImageLoader(new PicassoImageLoader());
+        Bmob.initialize(this, "9416b1587b7bf3347599bcfc848a62f9");
+    }
 
     /** Picasso 加载 */
     private class PicassoImageLoader implements NineGridView.ImageLoader {
@@ -37,16 +42,5 @@ public class CarApplication extends Application {
         public Bitmap getCacheImage(String url) {
             return null;
         }
-    }
-
-
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        NineGridView.setImageLoader(new PicassoImageLoader());
-
-        Bmob.initialize(this, "9416b1587b7bf3347599bcfc848a62f9");
     }
 }

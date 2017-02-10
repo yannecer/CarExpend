@@ -1,13 +1,10 @@
 package com.necer.carexpend.adapter;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * des:基础AblistView适配器
  * Created by xsf
@@ -15,16 +12,12 @@ import java.util.List;
  */
 public class BaseAblistViewAdapter<T> extends android.widget.BaseAdapter {
 
-
-
     protected Context mContext;
     protected LayoutInflater mInflater;
     protected List<T> data = new ArrayList<T>();
-   // protected PageBean pageBean;
     public BaseAblistViewAdapter(Context context){
         mContext = context;
         mInflater = LayoutInflater.from(mContext);
-      //  pageBean=new PageBean();
     }
 
     /**
@@ -107,11 +100,4 @@ public class BaseAblistViewAdapter<T> extends android.widget.BaseAdapter {
         return null;
     }
 
-    /**
-     * 分页
-     * @return
-     */
-  /*//  public PageBean getPageBean() {
-        return pageBean;
-    }*/
 }

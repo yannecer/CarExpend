@@ -599,7 +599,6 @@ public class WheelView extends View {
 
     /**
      * Sets layouts width and height
-     *
      * @param width  the layout width
      * @param height the layout height
      */

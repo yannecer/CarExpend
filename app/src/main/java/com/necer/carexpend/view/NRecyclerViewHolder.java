@@ -21,7 +21,6 @@ public class NRecyclerViewHolder extends RecyclerView.ViewHolder{
 
 
     public static NRecyclerViewHolder getViewHolder(Context context, ViewGroup parent, int layoutId) {
-
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
         NRecyclerViewHolder commonViewHolder = new NRecyclerViewHolder(itemView, parent);
         return commonViewHolder;

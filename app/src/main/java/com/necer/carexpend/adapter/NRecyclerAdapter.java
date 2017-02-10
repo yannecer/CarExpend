@@ -1,12 +1,10 @@
 package com.necer.carexpend.adapter;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
 import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
@@ -14,11 +12,8 @@ import com.necer.carexpend.R;
 import com.necer.carexpend.application.Constant;
 import com.necer.carexpend.bean.Expend;
 import com.necer.carexpend.view.NRecyclerViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
-
-
 /**
  * Created by necer on 2017/1/4.
  */
@@ -27,7 +22,6 @@ public class NRecyclerAdapter extends RecyclerView.Adapter<NRecyclerViewHolder> 
     private Context mContext;
     private List<Expend> mList;
     private View mFooterView;
-
 
     private final int TYPE_NORMAL = 0;
     private final int TYPE_FOOTER = 2;
@@ -55,7 +49,6 @@ public class NRecyclerAdapter extends RecyclerView.Adapter<NRecyclerViewHolder> 
                     }
                 }
             });*/
-
 
             return viewHolder;
         }

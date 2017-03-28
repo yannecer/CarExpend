@@ -7,6 +7,7 @@ package com.necer.carexpend.utils;
 public class MessageEvent {
 
     private boolean isEnable;
+    private String action;
 
     public MessageEvent(boolean isEnable) {
         this.isEnable = isEnable;
@@ -18,5 +19,13 @@ public class MessageEvent {
 
     public void setEnable(boolean enable) {
         isEnable = enable;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }

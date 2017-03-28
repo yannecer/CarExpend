@@ -39,14 +39,17 @@ public class HomeFragmentModel implements HomeContract.Model{
         bmobQuery.findObjects(new FindListener<Expend>() {
             @Override
             public void done(List<Expend> list, BmobException e) {
+                mView.endLoading();
                 if (e == null) {
                     if (page == 0) {
                         mView.setFirstList(list);
                     } else {
                         mView.setMoreList(list);
                     }
+                } else {
+                    mView.onErrer("查询失败："+e.getMessage());
                 }
-                mView.endLoading();
+
             }
         });
 

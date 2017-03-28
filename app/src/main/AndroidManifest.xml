@@ -45,8 +45,15 @@
         <activity android:name=".ui.activity.RegisterActivity"/>
         <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.CarBrandActivity"
+            android:theme="@style/Theme.AppCompat.Translucent"/>
+        <activity android:name=".ui.activity.CarListActivity"/>
+        <activity android:name=".ui.activity.FirstActivity"/>
+        <activity android:name=".ui.activity.AboutActivity"
+            android:theme="@style/Theme.AppCompat.Translucent" />
 
         <service android:name=".service.UpService"/>
+        <service android:name=".service.DelService"/>
 
     </application>
 

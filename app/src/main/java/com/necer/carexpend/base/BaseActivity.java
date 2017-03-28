@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.necer.carexpend.R;
+import com.necer.carexpend.base.baserx.RxManager;
+import com.necer.carexpend.utils.TUtil;
 
 import butterknife.ButterKnife;
 
@@ -21,8 +23,10 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivity {
 
     protected Context mContext;
+    protected T mModel;
+    protected RxManager mRxManager;
 
-   protected ProgressDialog progressDialog;
+    protected ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,8 +37,9 @@ public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivit
 
         setContentView(getLayoutId());
         ButterKnife.bind(this);
+        mRxManager = new RxManager();
+        mModel = TUtil.getT(this, 0);
         setData(savedInstanceState);
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("请稍后");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -42,8 +47,8 @@ public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivit
     }
 
     protected abstract int getLayoutId();
-    protected abstract void setData(Bundle savedInstanceState);
 
+    protected abstract void setData(Bundle savedInstanceState);
 
 
     private void setStatusBar() {
@@ -60,4 +65,11 @@ public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivit
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mModel != null) {
+            mModel.onDestroy();
+        }
+    }
 }

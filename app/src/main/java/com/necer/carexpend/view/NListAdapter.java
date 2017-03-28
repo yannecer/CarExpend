@@ -1,13 +1,10 @@
 package com.necer.carexpend.view;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by necer on 2016/11/24.
  */
@@ -18,12 +15,6 @@ public abstract class NListAdapter<T> extends BaseAdapter{
     protected List<T> dataList;
     protected int layoutId;
 
-
-    public NListAdapter(Context contxt, List<T> dataList, int layoutId) {
-        this.mContext = contxt;
-        this.dataList = dataList;
-        this.layoutId = layoutId;
-    }
 
     public NListAdapter(Context contxt,int layoutId) {
         this.mContext = contxt;
@@ -76,6 +67,10 @@ public abstract class NListAdapter<T> extends BaseAdapter{
     }
 
 
+    public void delItem(T t) {
+        dataList.remove(t);
+        notifyDataSetChanged();
+    }
 
 
 

@@ -2,9 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout xmlns:rfal="http://schemas.android.com/apk/res-auto"
+
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
+        xmlns:rfal="http://schemas.android.com/apk/res-auto"
         android:id="@+id/label_list_sample_rfal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,12 +19,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.necer.carexpend.view.NListView
-                android:id="@+id/nlistview"
+
+            <necer.nrecyclerview.NRecyclerView
+                android:id="@+id/nRecyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:background="@color/white"/>
         </android.support.v4.widget.SwipeRefreshLayout>
+
+
+        <TextView
+            android:id="@+id/tv_noContent"
+            style="@style/noContentTextView"
+            android:text="暂无花费信息"
+            android:visibility="gone" />
 
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
             android:id="@+id/label_list_sample_rfab"

@@ -7,11 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.necer.carexpend.R;
+import com.necer.carexpend.application.Constant;
 import com.necer.carexpend.base.BaseActivity;
 import com.necer.carexpend.bean.User;
-import com.necer.carexpend.utils.CommUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -25,13 +26,12 @@ public class RegisterActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-
     @Bind(R.id.et_mobileNumber)
     EditText et_mobileNumber;
     @Bind(R.id.et_passWord)
     EditText et_passWord;
-    @Bind(R.id.et_userName)
-    EditText et_userName;
+    @Bind(R.id.et_passWord1)
+    EditText et_passWord1;
 
 
     @Override
@@ -50,22 +50,21 @@ public class RegisterActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            //finish();
-            CommUtils.doubleCloseActivity(this);
+            finish();
         }
         return true;
 
 
     }
 
-    @OnClick(value = {R.id.iv_icon, R.id.bt_register, R.id.tv_goLogin})
+    @OnClick(value = {R.id.iv_icon, R.id.bt_register})
     public void onClick(View view) {
 
         switch (view.getId()) {
             case R.id.bt_register:
                 String mobileNumber = et_mobileNumber.getText().toString();
                 String password = et_passWord.getText().toString();
-                String userName = et_userName.getText().toString();
+                String passWord1 = et_passWord1.getText().toString();
 
                 String regExp = "^1[3,4,5,7,8]\\d{9}$";
                 if ("".equals(mobileNumber) || !mobileNumber.matches(regExp)) {
@@ -78,27 +77,26 @@ public class RegisterActivity extends BaseActivity {
                     return;
                 }
 
-                if ("".equals(userName)) {
-                    Snackbar.make(et_mobileNumber, "昵称不能为空！", Snackbar.LENGTH_SHORT).show();
+                if (!password.equals(passWord1)) {
+                    Snackbar.make(et_mobileNumber, "两次密码不一致！", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
-                register(mobileNumber, password, userName);
+                register(mobileNumber, password);
 
                 break;
-            case R.id.tv_goLogin:
+           /* case R.id.tv_goLogin:
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
-                break;
+                break;*/
         }
 
     }
 
-    private void register(String mobileNumber, String password, String userName) {
+    private void register(String mobileNumber, String password) {
         progressDialog.show();
         User user = new User();
-        user.setUsername(userName);
         user.setMobilePhoneNumber(mobileNumber);
         user.setPassword(password);
         user.signUp(new SaveListener<User>() {
@@ -106,7 +104,9 @@ public class RegisterActivity extends BaseActivity {
             public void done(User user, BmobException e) {
                 progressDialog.dismiss();
                 if (e == null) {
-                    Snackbar.make(et_mobileNumber, "注册成功！", Snackbar.LENGTH_SHORT).show();
+                    mRxManager.post(Constant.LOGIN_SUCCESS, null);
+                    Toast.makeText(RegisterActivity.this,"注册成功！",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                     RegisterActivity.this.finish();
                 } else {
                     Snackbar.make(et_mobileNumber, e.getMessage(), Snackbar.LENGTH_SHORT).show();
@@ -116,9 +116,5 @@ public class RegisterActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        CommUtils.doubleCloseActivity(this);
-    }
+
 }

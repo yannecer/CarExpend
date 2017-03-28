@@ -72,19 +72,12 @@
         android:layout_marginTop="20dp"
         android:text="登录"/>
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/tv_goRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="没有账号？去注册"
         android:layout_marginTop="10dp"
         android:textSize="13sp"
-        />
-
-
-
-
-
-
-
+        />-->
 </LinearLayout>

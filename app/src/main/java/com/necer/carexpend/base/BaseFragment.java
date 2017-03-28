@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.necer.carexpend.base.baserx.RxManager;
+
 import butterknife.ButterKnife;
 
 /**
@@ -17,6 +19,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
     protected View LayoutView;//fragment布局view
     protected Context mContext;
+    protected RxManager mRxManager;
 
     @Nullable
     @Override
@@ -27,6 +30,7 @@ public abstract class BaseFragment extends Fragment {
         }
         mContext = getActivity();
         ButterKnife.bind(this, LayoutView);
+        mRxManager = new RxManager();
         setDate(savedInstanceState);
         return LayoutView;
     }

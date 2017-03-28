@@ -1,1 +1,1 @@
-include ':app', ':library:FABlibrary', ':library:photoPicker', ':library:npicker'
+include ':app', ':library:FABlibrary', ':library:photoPicker', ':library:npicker', ':library:nrecyclerview'

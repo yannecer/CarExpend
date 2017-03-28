@@ -43,7 +43,7 @@ public class SplashActivity extends BaseActivity {
                 //进入主页
                 User user = BmobUser.getCurrentUser(User.class);
                 Intent intent = new Intent();
-                intent.setClass(mContext, user == null ? LoginActivity.class : MainActivity.class);
+                intent.setClass(mContext, user == null ? FirstActivity.class : MainActivity.class);
                 startActivity(intent);
             }
             finish();

@@ -23,6 +23,14 @@
 
 
 
+    <style name="Theme.AppCompat.Translucent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
+
     <style name="edit_login">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
@@ -42,6 +50,18 @@
     </style>
 
 
+
+    <!--无内容缺省的状态-->
+    <style name="noContentTextView" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:drawableTop">@mipmap/ic_launcher</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_light</item>
+    </style>
 
 
 </resources>

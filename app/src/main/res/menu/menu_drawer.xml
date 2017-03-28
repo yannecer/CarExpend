@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_item1"
-            android:icon="@android:drawable/ic_menu_add"
-            android:title="页面顶部是一张图片" />
 
-        <item
-            android:id="@+id/nav_item2"
-            android:icon="@android:drawable/ic_menu_compass"
-            android:title="tab 切换" />
-        <item
-            android:id="@+id/nav_item3"
-            android:icon="@android:drawable/ic_menu_add"
-            android:title="第二种方案" />
+    <item android:title="按条件查看花费">
+        <menu>
+            <item
+                android:id="@+id/nav_kind"
+                android:checked="false"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="分类查看" />
 
-        <item
-            android:id="@+id/nav_item4"
-            android:icon="@android:drawable/ic_menu_add"
-            android:title="第三种方案" />
-    </group>
+            <item
+                android:id="@+id/nav_time"
+                android:checked="false"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="时间段查看" />
+        </menu>
+    </item>
+
+    <item android:title="其他">
+        <menu>
+            <item
+                android:id="@+id/nav_out"
+                android:checked="false"
+                android:icon="@android:drawable/ic_menu_add"
+
+                android:title="退出" />
+            <item
+                android:id="@+id/nav_about"
+                android:checked="false"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="关于" />
+        </menu>
+    </item>
 
 </menu>

@@ -8,19 +8,29 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/nav_head_icon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/iv_logo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="20dp"
-        android:background="@mipmap/ic_launcher"
-        android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/nav_head_name"
-        android:layout_width="wrap_content"
+         />
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:text="@string/app_name"
-        android:textSize="18sp" />
+        android:layout_marginLeft="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mycar"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tv_series"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="5dp"
+            android:textSize="14sp" />
+    </LinearLayout>
 
 </LinearLayout>

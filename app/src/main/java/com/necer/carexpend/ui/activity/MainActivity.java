@@ -1,5 +1,6 @@
 package com.necer.carexpend.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,22 +8,29 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.necer.carexpend.MyLog;
 import com.necer.carexpend.R;
+import com.necer.carexpend.application.Constant;
 import com.necer.carexpend.base.BaseActivity;
+import com.necer.carexpend.bean.User;
 import com.necer.carexpend.ui.fragment.HomeFragment;
 import com.necer.carexpend.utils.CommUtils;
+import com.necer.carexpend.utils.ImageLoaderUtils;
 
 import butterknife.Bind;
+import cn.bmob.v3.BmobUser;
+import rx.functions.Action1;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity {
 
 
     @Bind(R.id.nav_view)
@@ -34,8 +42,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private HomeFragment homeFragment;
 
-    private ImageView headImageView;
-    private TextView headTextView;
+    private ImageView iv_logo;
+    private TextView tv_brand;
+    private TextView tv_series;
 
     @Override
     protected int getLayoutId() {
@@ -53,12 +62,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
         View headerView = mNavView.getHeaderView(0);//得到侧滑菜单的头部view
-        headImageView = (ImageView) headerView.findViewById(R.id.nav_head_icon);
-        headTextView = (TextView) headerView.findViewById(R.id.nav_head_name);
+        iv_logo = (ImageView) headerView.findViewById(R.id.iv_logo);
+        tv_brand = (TextView) headerView.findViewById(R.id.tv_brand);
+        tv_series = (TextView) headerView.findViewById(R.id.tv_series);
 
-        headImageView.setOnClickListener(this);
+        initCar();
+
+        mRxManager.on(Constant.CHANGE_CAR, new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                initCar();
+            }
+        });
 
 
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CarBrandActivity.class));
+                overridePendingTransition(R.anim.activity_open, 0);
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+
+    }
+
+    private void initCar() {
+        User user = BmobUser.getCurrentUser(User.class);
+        ImageLoaderUtils.display(this, iv_logo, user.getCarLogo());
+        tv_brand.setText(TextUtils.isEmpty(user.getCarBrand()) ? "选择我的汽车" : user.getCarBrand());
+        tv_series.setText(TextUtils.isEmpty(user.getCarSeries()) ? "" : user.getCarSeries());
     }
 
     @Override
@@ -67,7 +101,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            //super.onBackPressed();
             CommUtils.doubleCloseActivity(this);
         }
     }
@@ -86,16 +119,41 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
-
-                    case R.id.nav_item1:
-
-                        MyLog.d("nav_item1");
+                    case R.id.nav_out:
+                        goOut();
+                        break;
+                    case R.id.nav_about:
+                        startActivity(new Intent(MainActivity.this,AboutActivity.class));
+                        overridePendingTransition(R.anim.activity_open, 0);
+                        break;
+                    case R.id.nav_kind:
+                        Toast.makeText(MainActivity.this, "请等待。。", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_time:
+                        Toast.makeText(MainActivity.this, "请等待。。", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
+    }
+
+    private void goOut() {
+
+       // AlertDialog
+        new AlertDialog.Builder(this).setTitle("确认退出登录？")
+                .setNegativeButton("取消",null)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BmobUser.logOut();   //清除缓存用户对象
+                        finish();
+                    }
+                }).create().show();
+
+
+
     }
 
 
@@ -106,23 +164,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
 
-            case R.id.nav_head_icon:
-
-               // startActivity(new Intent(this, RegisterActivity.class));
-               /* User currentUser = BmobUser.getCurrentUser(User.class);
-                if (currentUser == null) {
-
-                }*/
-                startActivity(new Intent(this, LoginActivity.class));
-
-                break;
-        }
-
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-    }
 
 }

@@ -15,6 +15,7 @@ public class Expend extends BmobObject {
     private double money;
     private String describe;
     private String date;
+    private String createTime;
     private int type;
     private List<String> imageUrl;
 
@@ -37,7 +38,13 @@ public class Expend extends BmobObject {
     }
 
 
+    public String getCreateTime() {
+        return createTime;
+    }
 
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
     public User getUser() {
         return user;

@@ -7,12 +7,10 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.necer.carexpend.application.Constant;
+import com.necer.carexpend.base.baserx.RxManager;
 import com.necer.carexpend.bean.Expend;
 import com.necer.carexpend.utils.CompressUtil;
-import com.necer.carexpend.utils.MessageEvent;
 import com.necer.carexpend.utils.SharePrefUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -29,6 +27,7 @@ public class UpService extends Service {
 
     private Expend expend;
     public static final String EXPEND = "expend";
+    private RxManager mRxManager;
 
     @Nullable
     @Override
@@ -38,11 +37,17 @@ public class UpService extends Service {
 
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        mRxManager = new RxManager();
+    }
+
+    @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
         expend = (Expend) intent.getSerializableExtra(EXPEND);
 
-        EventBus.getDefault().post(new MessageEvent(true));
+        mRxManager.post(Constant.LOADING,true);
 
         if (expend.getImageUrl().size() != 0) {
             new CompressUtil(this, expend.getImageUrl()).compress().setOnCompressCompleteListener(new CompressUtil.OnCompressCompleteListener() {
@@ -73,10 +78,12 @@ public class UpService extends Service {
 
                 @Override
                 public void onProgress(int i, int i1, int i2, int i3) {
+
                 }
 
                 @Override
                 public void onError(int i, String s) {
+                    save(expend);
                 }
             });
         } else {
@@ -91,7 +98,7 @@ public class UpService extends Service {
                 if (e == null) {
                     //成功,清除
                     SharePrefUtil.remove(UpService.this, Constant.WAITFORUPLOAD);
-                    EventBus.getDefault().post(new MessageEvent(false));
+                    mRxManager.post(Constant.LOADING,false);
                     UpService.this.stopSelf();
                 }
             }

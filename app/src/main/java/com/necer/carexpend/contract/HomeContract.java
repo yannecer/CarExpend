@@ -1,6 +1,5 @@
 package com.necer.carexpend.contract;
 
-import com.necer.carexpend.base.BaseModel;
 import com.necer.carexpend.base.BaseView;
 import com.necer.carexpend.bean.Expend;
 
@@ -16,9 +15,12 @@ public interface HomeContract {
         void setFirstList(List<Expend> dataList);
 
         void setMoreList(List<Expend> dataList);
+
+        void onErrer(String message);
+
     }
 
-    interface Model extends BaseModel{
+    interface Model {
         void getDataList(int page,boolean isShowLoading,int dataSize);
     }
 

@@ -1,6 +1,7 @@
 package com.necer.carexpend.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,39 +10,43 @@ import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
 import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
 import com.necer.carexpend.R;
-import com.necer.carexpend.application.Constant;
 import com.necer.carexpend.bean.Expend;
-import com.necer.carexpend.view.NListAdapter;
-import com.necer.carexpend.view.NListViewHolder;
+import com.necer.carexpend.utils.ExpendItemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import necer.nrecyclerview.NAdapter;
+import necer.nrecyclerview.NRecyclerViewHolder;
 
 /**
  * Created by necer on 2017/2/4.
  */
 
-public class HomeAdapter extends NListAdapter<Expend> {
-
-
-    public HomeAdapter(Context contxt, int layoutId) {
-        super(contxt, layoutId);
+public class HomeAdapter extends NAdapter<Expend> {
+    public HomeAdapter(Context context) {
+        super(context);
     }
 
     @Override
-    public void onBindData(View view, int position, final Expend expend) {
+    protected int getItemLayoutId() {
+        return R.layout.item_home;
+    }
 
+    @Override
+    protected void onBindData(NRecyclerViewHolder holder, final Expend expend, int position) {
+        TextView tv_expend_option = holder.getView( R.id.tv_expend_option);
+        TextView tv_createTime = holder.getView( R.id.tv_createTime);
+        TextView tv_delete = holder.getView( R.id.tv_delete);
+        tv_delete.setVisibility(TextUtils.isEmpty(expend.getObjectId()) ? View.GONE : View.VISIBLE);
+        TextView tv_content = holder.getView(R.id.tv_content);
+        ImageView avatar = holder.getView(R.id.avatar);
+        NineGridView nineGrid = holder.getView( R.id.nineGrid);
 
-        TextView tv_expend_option = NListViewHolder.getView(view, R.id.tv_expend_option);
-        TextView tv_createTime = NListViewHolder.getView(view, R.id.tv_createTime);
-        TextView tv_delete = NListViewHolder.getView(view, R.id.tv_delete);
-        ImageView avatar = NListViewHolder.getView(view, R.id.avatar);
-        NineGridView nineGrid = NListViewHolder.getView(view, R.id.nineGrid);
-
-
-        tv_expend_option.setText(Constant.EXPENDITEMS[expend.getType()] + "--" + expend.getMoney()+"        "+expend.getDate());
-        tv_createTime.setText(expend.getCreatedAt());
-        avatar.setImageResource(Constant.EXPENDICON[expend.getType()]);
+        tv_expend_option.setText(ExpendItemUtils.getNameByType(expend.getType()) + " — " + expend.getMoney() + "        " + expend.getDate());
+        tv_createTime.setText(expend.getCreateTime());
+        avatar.setImageResource(ExpendItemUtils.getIconByType(expend.getType()));
+        tv_content.setText(expend.getDescribe());
 
         List<String> imageUrl = expend.getImageUrl();
         if (imageUrl != null) {
@@ -64,7 +69,6 @@ public class HomeAdapter extends NListAdapter<Expend> {
             }
         });
     }
-
 
     public interface OnDeleteListener {
         void onDelete(Expend expend);

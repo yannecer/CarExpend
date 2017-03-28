@@ -1,5 +1,4 @@
 package com.necer.carexpend.ui.activity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import com.necer.carexpend.R;
 import com.necer.carexpend.adapter.NinePicturesAdapter;
 import com.necer.carexpend.application.Constant;
@@ -21,15 +19,14 @@ import com.necer.carexpend.bean.Expend;
 import com.necer.carexpend.bean.User;
 import com.necer.carexpend.service.UpService;
 import com.necer.carexpend.utils.CommUtils;
+import com.necer.carexpend.utils.ExpendItemUtils;
 import com.necer.carexpend.utils.ImageLoaderUtils;
 import com.necer.carexpend.utils.SharePrefUtil;
 import com.necer.carexpend.view.NoScrollGridView;
 import com.yuyh.library.imgsel.ImageLoader;
 import com.yuyh.library.imgsel.ImgSelActivity;
 import com.yuyh.library.imgsel.ImgSelConfig;
-
 import java.util.List;
-
 import butterknife.Bind;
 import cn.bmob.v3.BmobUser;
 import necer.npicker.DatePicker;
@@ -49,12 +46,8 @@ public class AddExpendActivity extends BaseActivity{
     EditText et_describe;
 
     private Menu menu;
-
     private NinePicturesAdapter ninePicturesAdapter;
-
     private User user;
-
-    private int type;
     private String label;
 
 
@@ -74,8 +67,8 @@ public class AddExpendActivity extends BaseActivity{
 
         user = BmobUser.getCurrentUser(User.class);
 
-        type = getIntent().getIntExtra("type", -1);
         label = getIntent().getStringExtra("label");
+        toolbar.setTitle("添加" + label);
 
         ninePicturesAdapter = new NinePicturesAdapter(this, 9, new NinePicturesAdapter.OnClickAddListener() {
             @Override
@@ -107,9 +100,7 @@ public class AddExpendActivity extends BaseActivity{
                         }).show();
                 break;
             case R.id.menu_submit:
-
                 submit();
-
                 break;
         }
 
@@ -126,19 +117,21 @@ public class AddExpendActivity extends BaseActivity{
             Snackbar.make(et_money,"请输入money！",Snackbar.LENGTH_SHORT).show();
             return;
         }
-        for (int i = 0; i < imageList.size(); i++) {
-            if (imageList.get(i).equals("")) {
-                imageList.remove(i);
-            }
+
+        if (imageList.contains("")) {
+            imageList.remove("");
         }
 
         Expend expend = new Expend();
         expend.setUser(user);
         expend.setMoney(Double.parseDouble(money));
+        int type = ExpendItemUtils.getTypeByName(label);
         expend.setType(type);
         expend.setDescribe(describe);
         expend.setDate(date);
         expend.setImageUrl(imageList);
+        expend.setCreateTime(CommUtils.getCreateTime());
+
 
         //保存正在上传的
         SharePrefUtil.saveObj(this, Constant.WAITFORUPLOAD,expend);
@@ -147,9 +140,7 @@ public class AddExpendActivity extends BaseActivity{
         intent.putExtra(UpService.EXPEND, expend);
         startService(intent);
 
-
         //返回前页面信息
-
         Intent resultIntent = new Intent();
         resultIntent.putExtra(Constant.WAITFORUPLOAD, expend);
         setResult(Activity.RESULT_OK,resultIntent);

@@ -31,6 +31,17 @@ public class CommUtils {
         return sdf.format(date);
     }
 
+    /**
+     * 得到当前时间的毫秒值转成时间
+     *
+     * @return
+     */
+    public static String getCreateTime() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  HH:mm");
+        return sdf.format(date);
+    }
+
 
     /**
      * 获取当前版本信息.

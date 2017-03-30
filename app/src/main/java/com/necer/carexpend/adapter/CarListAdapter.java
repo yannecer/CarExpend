@@ -39,7 +39,7 @@ public class CarListAdapter extends CarItemAdapter<CarListBean>{
         itemViewHolder.tv_name.setText(carListBean.getFullname());
         itemViewHolder.tv_desc.setText(carListBean.getSalestate());
         Glide.with(mContext).load(carListBean.getLogo())
-                .placeholder(R.mipmap.ic_launcher).into(itemViewHolder.iv_pic);
+                .fitCenter().into(itemViewHolder.iv_pic);
 
     }
 

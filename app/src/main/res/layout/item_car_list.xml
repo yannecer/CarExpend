@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:orientation="vertical">
 
 
@@ -19,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_launcher" />
+            android:scaleType="fitCenter"
+             />
 
         <LinearLayout
             android:layout_width="match_parent"

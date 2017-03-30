@@ -40,7 +40,7 @@ public class CarBrandAdapter extends  CarItemAdapter<CarBrandBean>{
         CarBrandAdapter.ItemViewHold itemViewHold = (CarBrandAdapter.ItemViewHold) holder;
         itemViewHold.tv_name.setText(carBrandBean.getName());
         Glide.with(mContext).load(carBrandBean.getLogo())
-                .placeholder(R.mipmap.ic_launcher).into(itemViewHold.iv_icon);
+                .placeholder(R.mipmap.normal).into(itemViewHold.iv_icon);
     }
 
     static class ItemViewHold extends RecyclerView.ViewHolder {

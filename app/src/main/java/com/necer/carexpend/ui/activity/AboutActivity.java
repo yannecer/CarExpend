@@ -16,7 +16,6 @@ public class AboutActivity extends BaseActivity{
         return R.layout.activity_about;
     }
 
-
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Override
